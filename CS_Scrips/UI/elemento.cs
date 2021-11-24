@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-
 using TMPro;
+
 
 
 public class elemento : MonoBehaviour
 {
-    [SerializeReference]
+    
     public int Valor;
     public TMP_Text Numero;
     public bool Is_Active;
@@ -21,25 +21,24 @@ public class elemento : MonoBehaviour
 
     public RectTransform guia;
 
-
     private void Awake()
     {
         Numero = GetComponent<TMP_Text>();
         Numero.text = Valor.ToString();
 
-       
-
     }
 
     private void Update()
     {
-        transparencia();
+       
+        Transparencia();
         Valor = int.Parse(Numero.text);
-
     }
 
-   public void transparencia()
+   
+    public void Transparencia()
     {
+        
         if (Is_Active || used)
         {
             //el texto esta mas transparente . Asi se da la ilucion de desactivado
@@ -51,6 +50,13 @@ public class elemento : MonoBehaviour
             Numero.faceColor = desactivar;
             Numero.color = desactivar;
         }
+    }
+    public void Resetear()
+    {
+        used = false;
+        Is_Active = false;
+        Numero.text = "0";
+        Valor = 0;
     }
 
 

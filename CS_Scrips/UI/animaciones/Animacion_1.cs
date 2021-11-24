@@ -8,11 +8,13 @@ public class Animacion_1 : MonoBehaviour
     public Image Mi_imagen;
     public bool IS_Clear;
     public Color Mi_color;
+   
 
     private void Awake()
     {
         Mi_imagen = GetComponent<Image>();
     }
+
 
     void Update()
     {

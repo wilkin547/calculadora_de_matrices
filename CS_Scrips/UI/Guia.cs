@@ -3,19 +3,19 @@
 public class Guia : MonoBehaviour
 {
 
-    private int fila = 0;
-    private int Columna = 0;
+    private byte fila = 0;
+    private byte Columna = 0;
     [SerializeField]
     private RectTransform transform;
     private elemento Ultimo_elemento = new elemento();
-    public Calculate_Controller calculate;
+    
 
 
 
     public void Up()
     {
         fila -= 1;
-        Calculate_Controller.calculate.Fila--;
+        Calculate_Controller.calculate.Fila = fila;
         limite();
         Actualiza_posicion();
     }
@@ -23,7 +23,7 @@ public class Guia : MonoBehaviour
     public void Down()
     {
         fila += 1;
-        Calculate_Controller.calculate.Fila++;
+        Calculate_Controller.calculate.Fila = fila;
         limite();
         Actualiza_posicion();
     }
@@ -31,8 +31,7 @@ public class Guia : MonoBehaviour
     public void Rigth()
     {
         Columna += 1;
-        Calculate_Controller.calculate.Columna++;
-       
+        Calculate_Controller.calculate.Columna = Columna;
         limite();
         Actualiza_posicion();
 
@@ -41,7 +40,7 @@ public class Guia : MonoBehaviour
     public void Left()
     {
         Columna -= 1;
-        Calculate_Controller.calculate.Columna--;
+        Calculate_Controller.calculate.Columna = Columna;
         limite();
         Actualiza_posicion();
       
@@ -49,8 +48,8 @@ public class Guia : MonoBehaviour
 
     private void limite()
     {
-        fila = Mathf.Clamp(fila, 0, 3);
-        Columna = Mathf.Clamp(Columna, 0, 3);
+        fila = (byte)Mathf.Clamp(fila, 0, 3);
+        Columna = (byte)Mathf.Clamp(Columna, 0, 3);
     }
 
     public void Actualiza_posicion()

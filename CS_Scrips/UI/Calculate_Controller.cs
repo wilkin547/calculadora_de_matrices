@@ -1,5 +1,7 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+
 
 public class Calculate_Controller : MonoBehaviour
 {
@@ -8,26 +10,39 @@ public class Calculate_Controller : MonoBehaviour
 
     [SerializeField]
     public RectTransform[,] Elementos = new RectTransform[4, 4];
-    private elemento[,] celdas;
+    [SerializeField]
+    public elemento[,] celdas;
     public RectTransform Mi_texto_Matriz;
+    public LinkedList<elemento> celda ;
 
-    public int Fila = 0;
-    public int Columna = 0;
+
+    public byte Fila = 0;
+    public byte Columna = 0;
+
+    public byte Celdas_activas;
 
     private void Awake()
     {
-        Organize_Array();
+        Inicialar();
+    }
+    public void Inicialar()
+    {
         Calculate_Controller.calculate = this;
+        Organize_Array();
+        Application.targetFrameRate = 60;
+        print("despiero");
 
+        
     }
     public virtual void Update()
     {
-        Application.targetFrameRate = 60;
-        limites();
+
+        Limites();
     }
     private void Organize_Array()
     {
         RectTransform[] children = Mi_texto_Matriz.GetComponentsInChildren<RectTransform>();
+        elemento[] pp = Mi_texto_Matriz.GetComponentsInChildren<elemento>();
 
         int indice = 1;
 
@@ -35,67 +50,70 @@ public class Calculate_Controller : MonoBehaviour
         {
             for (int I = 0; I < 4; I++)
             {
+                //LinkedListNode<elemento> current = new LinkedListNode<elemento>(pp[indice]);
                 Elementos[i, I] = children[indice];
-               // celdas[i, I] = Elementos[i, I].GetComponent<elemento>();
+               // celda.AddLast(current);
                 indice++;
             }
         }
-        
+
     }
     public void Activa_Elemento()
     {
         Elementos[Fila, Columna].GetComponent<elemento>().Is_Active = true;
     }
-    public void Desactiva_Elemento()
-    {
-        Elementos[Fila, Columna].GetComponent<elemento>().Is_Active = false;
-    }
     public elemento Elemento_Actual()
     {
-        limites();
+        Limites();
         return Elementos[Fila, Columna].GetComponent<elemento>();
     }
-    public void limites()
+    public void Limites()
     {
-        Columna = Mathf.Clamp(Columna, 0, 3);
-        Fila = Mathf.Clamp(Fila, 0, 3);
+        Columna = (byte)Mathf.Clamp(Columna, 0, 3);
+        Fila = (byte)Mathf.Clamp(Fila, 0, 3);
     }
-
     /// <summary>
     /// los numeros representa el tipo de matriz
     /// </summary>
-    public bool[] Kind_Of_Matriz;
+    public string Kind_of_matriz;
     public void Comprueba_Matriz()
     {
-
-        var _2x2 = 
-            celdas[0, 0].used & celdas[0, 1].used &
-            celdas[1, 0].used & celdas[1, 1].used;
+        //primero comprueba el 2x2
+   
         
-        var _2x3 = _2x2 &
-             celdas[0, 2].used &
-             celdas[1, 2].used;
-
-        var _2x4 = _2x3 &
-             celdas[0, 3].used &
-             celdas[1, 3].used;
-
-        var _3x3 = _2x3 &
-            celdas[2, 0].used & celdas[2, 1].used &
-            celdas[2, 2].used;
-
-        var _3x4 = _3x3 &
-            celdas[0, 3].used &
-            celdas[1, 3].used &
-            celdas[2, 3].used;
+        switch (Celdas_activas)
+        {
+            case 4:
+                if (true)
+                {
+                    
+                }
+                break;
+            case 9:
+                break;
+            case 16:
+                break;
+        }
 
 
-        var _4x4 = _3x4 &
-            celdas[3, 0].used & celdas[3, 1].used & celdas[3, 2].used &
-            celdas[3, 3].used;
- 
-        
+        for (int i = 0; i < 2; i++)
+        {
+            for (int I = 0; I < 2; I++)
+            {
 
+            }
+        }
+    }
+    /// <summary>
+    /// pasa el numero a negativo
+    /// </summary>
+    /// 
+    public void Pasa_negativo()
+    {
+        Elemento_Actual().Numero.text = (-1 * (int.Parse(Elemento_Actual().Numero.text))).ToString();
+    }
+    public void Elemina_celda()
+    {
 
     }
 

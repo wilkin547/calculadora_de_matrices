@@ -28,6 +28,8 @@ public class Agregar_Numeros : MonoBehaviour
             //limpiamos el elemento
             Calculate_Controller.calculate.Elemento_Actual().Numero.text = "";
             Calculate_Controller.calculate.Elemento_Actual().used = true;
+            Calculate_Controller.calculate.Celdas_activas++;
+
         }
 
         Calculate_Controller.calculate.Elemento_Actual().Numero.text += numero;

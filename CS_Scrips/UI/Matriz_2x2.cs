@@ -4,6 +4,8 @@ public class Matriz_2x2 : MonoBehaviour
 {
     public int n00, n01,
                n10, n11;
+
+    private 
     int _determinante;
 
     public void Start()
@@ -12,7 +14,6 @@ public class Matriz_2x2 : MonoBehaviour
         int diagonal_Secudario = n01 * n10;
         _determinante = diagonal_principal - diagonal_Secudario;
     }
-
 
     public int[] transpuesta()
     {
@@ -27,9 +28,9 @@ public class Matriz_2x2 : MonoBehaviour
         get => _determinante;
     }
 
-    public Matriz_2x2()
+    private void agregar()
     {
-
+        n00 = Calculate_Controller.calculate.celdas[0,0].Valor;
     }
 
 
