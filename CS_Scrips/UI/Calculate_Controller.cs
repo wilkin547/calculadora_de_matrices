@@ -11,13 +11,13 @@ public class Calculate_Controller : MonoBehaviour
     [SerializeField]
     public RectTransform[,] Elementos = new RectTransform[4, 4];
     [SerializeField]
-    public elemento[,] celdas;
-    public RectTransform Mi_texto_Matriz;
+    public elemento[] celdas;
+    public GameObject Mi_texto_Matriz;
     public LinkedList<elemento> celda ;
 
 
-    public byte Fila = 0;
-    public byte Columna = 0;
+    public int Fila = 0;
+    public int Columna = 0;
 
     public byte Celdas_activas;
 
@@ -42,7 +42,7 @@ public class Calculate_Controller : MonoBehaviour
     private void Organize_Array()
     {
         RectTransform[] children = Mi_texto_Matriz.GetComponentsInChildren<RectTransform>();
-        elemento[] pp = Mi_texto_Matriz.GetComponentsInChildren<elemento>();
+        elemento[] current =  Mi_texto_Matriz.GetComponentsInChildren<elemento>();
 
         int indice = 1;
 
@@ -52,9 +52,15 @@ public class Calculate_Controller : MonoBehaviour
             {
                 //LinkedListNode<elemento> current = new LinkedListNode<elemento>(pp[indice]);
                 Elementos[i, I] = children[indice];
-               // celda.AddLast(current);
+                celda.AddLast(current[indice]);
                 indice++;
             }
+        }
+
+        foreach (var celdas in Elementos)
+        {
+            celda.AddLast(celdas.gameObject.GetComponent<elemento>());
+            //print(celda.Find())
         }
 
     }
@@ -69,8 +75,8 @@ public class Calculate_Controller : MonoBehaviour
     }
     public void Limites()
     {
-        Columna = (byte)Mathf.Clamp(Columna, 0, 3);
-        Fila = (byte)Mathf.Clamp(Fila, 0, 3);
+        Columna = Mathf.Clamp(Columna, 0, 3);
+        Fila = Mathf.Clamp(Fila, 0, 3);
     }
     /// <summary>
     /// los numeros representa el tipo de matriz
@@ -79,30 +85,7 @@ public class Calculate_Controller : MonoBehaviour
     public void Comprueba_Matriz()
     {
         //primero comprueba el 2x2
-   
         
-        switch (Celdas_activas)
-        {
-            case 4:
-                if (true)
-                {
-                    
-                }
-                break;
-            case 9:
-                break;
-            case 16:
-                break;
-        }
-
-
-        for (int i = 0; i < 2; i++)
-        {
-            for (int I = 0; I < 2; I++)
-            {
-
-            }
-        }
     }
     /// <summary>
     /// pasa el numero a negativo
@@ -112,9 +95,9 @@ public class Calculate_Controller : MonoBehaviour
     {
         Elemento_Actual().Numero.text = (-1 * (int.Parse(Elemento_Actual().Numero.text))).ToString();
     }
-    public void Elemina_celda()
+    public void Resert_ELement_actual()
     {
-
+        Elemento_Actual().Resetear();
     }
 
     public float time = 1;
@@ -128,13 +111,13 @@ public class Calculate_Controller : MonoBehaviour
     IEnumerator POS_Y()
     {
 
-        Pos_y = Mi_texto_Matriz.localPosition.y;
+        Pos_y = Mi_texto_Matriz.GetComponent<RectTransform>().localPosition.y;
 
-        while (Mi_texto_Matriz.localPosition.y < 460)
+        while (Mi_texto_Matriz.GetComponent<RectTransform>().localPosition.y < 460)
         {
             Pos_y += (460 / time) * Time.deltaTime;
             Pos_y = Mathf.Clamp(Pos_y, 0, 460);
-            Mi_texto_Matriz.localPosition = new Vector2(Pos_x, Pos_y);
+            Mi_texto_Matriz.GetComponent<RectTransform>().localPosition = new Vector2(Pos_x, Pos_y);
 
             yield return null;
         }
@@ -142,13 +125,13 @@ public class Calculate_Controller : MonoBehaviour
     IEnumerator POS_X()
     {
 
-        Pos_x = Mi_texto_Matriz.localPosition.x;
+        Pos_x = Mi_texto_Matriz.GetComponent<RectTransform>().localPosition.x;
 
-        while (Mi_texto_Matriz.localPosition.x > -250)
+        while (Mi_texto_Matriz.GetComponent<RectTransform>().localPosition.x > -250)
         {
             Pos_x += (-250 / time) * Time.deltaTime;
             Pos_x = Mathf.Clamp(Pos_x, -260, 0);
-            Mi_texto_Matriz.localPosition = new Vector2(Pos_x, Pos_y);
+            Mi_texto_Matriz.GetComponent<RectTransform>().localPosition = new Vector2(Pos_x, Pos_y);
 
             yield return null;
         }
@@ -158,13 +141,13 @@ public class Calculate_Controller : MonoBehaviour
     }
     IEnumerator Scale()
     {
-        scale_x = Mi_texto_Matriz.localScale.x;
+        scale_x = Mi_texto_Matriz.GetComponent<RectTransform>().localScale.x;
 
         while (scale_x > 0.3f)
         {
             scale_x -= (0.7f / time) * Time.deltaTime;
             scale_x = Mathf.Clamp(scale_x, 0.3f, 1);
-            Mi_texto_Matriz.localScale = new Vector2(scale_x, scale_x);
+            Mi_texto_Matriz.GetComponent<RectTransform>().localScale = new Vector2(scale_x, scale_x);
 
             yield return null;
         }

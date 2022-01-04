@@ -30,7 +30,7 @@ public class Matriz_2x2 : MonoBehaviour
 
     private void agregar()
     {
-        n00 = Calculate_Controller.calculate.celdas[0,0].Valor;
+       
     }
 
 
